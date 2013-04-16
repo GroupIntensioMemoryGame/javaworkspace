@@ -10,9 +10,8 @@ import java.awt.*;
 
 /// checking to see if this update the repository
 
-public class Selection extends JFrame
+public class Selection extends JApplet
 {
-	
 	// class variables
 	JLabel sSays;
 	JLabel userName;
@@ -94,7 +93,7 @@ public class Selection extends JFrame
 		
 		setSize(400,800);
 		setBackground(Color.BLUE);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		
 	}// end of constructor
@@ -102,6 +101,7 @@ public class Selection extends JFrame
 	public static void main(String[] args)
 	{
 		new Selection();
+		
 		
 		
 	}// end of main method

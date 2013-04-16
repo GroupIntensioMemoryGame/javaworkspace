@@ -9,10 +9,9 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
-// test to from eclipse
 
 
-public class Login extends JFrame
+public class Login extends JApplet
 {
 	// class variables
 	JButton Jbt;
@@ -64,23 +63,26 @@ public class Login extends JFrame
 		//sel.setBorder(border);
 		
 		// add panels to frame 
-		add(labl,BorderLayout.NORTH);
+		add(labl,BorderLayout.PAGE_START);
 		
 		add(sel,BorderLayout.CENTER);
 
-		setLocationRelativeTo(null);
+		//setLocationRelativeTo(null);
 		// set size
 		setSize(400,500);
 		// set frame default on close
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// set frame to visible
-		setVisible(true);
+		//setVisible(true);
 		
 	}// end constructor
 
 	public static void main(String[] args)
 	{
+		
 		new Login();
+		
+		
 	}// end of main 
 
 }// end of class
