@@ -3,6 +3,9 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import model.GameObject;
+import model.Player;
+import model.SimonSays;
 
 import javax.swing.*;
 
@@ -19,6 +22,43 @@ public class SimonSaysGame extends JApplet
 			private JLabel jlName;
 			private JTextField jtName;
 			private JButton jbUser;
+			
+//*******************for options**************************
+		    private JLabel userName, user;
+			private JButton play, logout;
+			// for panel 1
+			private JLabel gOptions, NObjects;
+			private JComboBox numObj;
+			// for panel 2
+			private JLabel shapes;
+			private JCheckBox Sqr, Tri, Cir;
+			
+			// for panel 3
+			private  JLabel Colors;
+			private JCheckBox Red, Blue, Green, Purple, Orange, Yellow;
+			
+			// panel 4
+			private JLabel layout;
+			private JRadioButton grid, diamond;
+			// panel 5
+			private JLabel ObSize;
+			private JComboBox size;
+// ************** for game frame ***********************
+			private  JButton quit;
+			
+// Class Variables
+			private  int numberOfObjects = 0;
+			private String NUsr;
+			private  String Usr;
+			/* holds array of shapes and colors selected by user to search 
+			 * to filter size, shape, and colors to load to the object list. 
+			*/
+			private String [] Shape;
+			private int shElements = 0;
+			private String [] Clr;
+			private int strElements = 0;
+				
+			
 			public void init()
 			{
 				try
@@ -41,7 +81,7 @@ public class SimonSaysGame extends JApplet
 				JPanel labl = new JPanel(new FlowLayout());
 				JPanel sel = new JPanel(new FlowLayout(FlowLayout.CENTER, 100, 50));
 				
-				// ***create User Frame***
+				// ***createUser Frame***
 				final JFrame cUser = new JFrame();
 				cUser.setTitle("Create User");
 				cUser.setSize(400,200);
@@ -77,29 +117,10 @@ public class SimonSaysGame extends JApplet
 				lg.add(sel,BorderLayout.CENTER);
 				
 				add(lg);
-			
+				
 			
 	//************************options Menu************************************************
-			// **for options**
-			final JLabel userName, user;
-			final JButton play, logout;
-			// for panel 1
-			final JLabel gOptions, NObjects;
-			final JComboBox numObj;
-			// for panel 2
-			final JLabel shapes;
-			final JCheckBox Sqr, Tri, Cir;
-			
-			// for panel 3
-			final  JLabel Colors;
-			final JCheckBox Red, Blue, Green, Purple, Orange, Yellow;
-			
-			// panel 4
-			final JLabel layout;
-			final JRadioButton grid, diamond;
-			// panel 5
-			final JLabel ObSize;
-			final JComboBox size;
+	
 					
 				
 			// create main frame 
@@ -116,20 +137,23 @@ public class SimonSaysGame extends JApplet
 			  label.setBackground(Color.white);
 			  gOptions = new JLabel("Game Options");
 			  gOptions.setFont(new Font( "SansSerif",Font.PLAIN, 20));
-			   
-			    
+	
+			  		    
 			   opt.add(label);
 			   opt.add(userName = new JLabel("UserName: "));
-			   opt.add(user = new JLabel("<<user>>"));
+			   opt.add(user = new JLabel());
 			   opt.add(logout = new JButton("Logout"));
 			   logout.setBackground(Color.orange);
 			   opt.add(play = new JButton("Play! "));
 			   play.setBackground(Color.orange);
+			   // disable play button until critera is met
+			   play.setEnabled(true);
 			   opt.add(gOptions);
 			   // panel 2
 			   opt.add(NObjects = new JLabel("Number of Objects: "));
 			   opt.add(numObj = new JComboBox(new Object[]
-					   {"1", "2","3","4","5"}));
+					   {"4", "5","6","7","8","9","10","11","12","13","14","15","16","17","18",
+					   "19","20","21","22","23","24","25"}));
 			   // add to main jpanel 
 			  
 			   // panel 3
@@ -161,15 +185,25 @@ public class SimonSaysGame extends JApplet
 			   //object size
 			   opt.add(ObSize = new JLabel("Object Size: "));
 			   opt.add(size = new JComboBox( new Object[]
-			   {"small", "Medium", "Large"}));
+			   {"Small", "Medium", "Large"}));
 			 
 			   
 			   opt.setBackground(Color.lightGray);
 			   
+			   //*********************Game GUI******************************************
+			   final JPanel main = new JPanel(new BorderLayout());
+			   JPanel gamePane = new JPanel();
+	           ImageIcon img = new ImageIcon("resources/Cir_Blue_Lg.png");
+	           gamePane.add(new JLabel(img),BorderLayout.CENTER);
+			   main.add(quit = new JButton("quit"),BorderLayout.PAGE_START);
+			   main.add(gamePane,BorderLayout.CENTER);		
+			   		
+			   
+			   
 			   //******************Action Listeners and events******************************
 			
 				//***** Login / create User menu's******
-				//Create User action Event
+				//CreateUser action Event
 				Jbt2.addActionListener(new ActionListener()
 						{
 
@@ -181,6 +215,15 @@ public class SimonSaysGame extends JApplet
 							}
 					
 						});
+					// create user button 
+					jbUser.addActionListener(new ActionListener()
+					 {
+							public void actionPerformed(ActionEvent e)
+					      {
+						     NUsr= jtName.getText();
+						     cUser.setVisible(false);
+					      }
+					});
 				
 			   
 				// Login Action event 
@@ -189,7 +232,8 @@ public class SimonSaysGame extends JApplet
 				
 					public void actionPerformed(ActionEvent e)
 					{
-						// adds user and goes to options menu
+						//user and goes to options menu
+					    user.setText(Jtx.getText());
 						add(opt);
 						setSize(400,900);
 						lg.setVisible(false);
@@ -207,7 +251,7 @@ public class SimonSaysGame extends JApplet
 					public void actionPerformed(ActionEvent e)
 					{
 						// returns to login screen
-						add(lg);
+			
 						setSize(400,500);
 						lg.setVisible(true);
 						opt.setVisible(false);
@@ -215,7 +259,46 @@ public class SimonSaysGame extends JApplet
 
 					
 				});
+				
+				play.addActionListener(new ActionListener()
+				{
+					public void actionPerformed(ActionEvent e)
+					{
+						add(main);
+						setSize(1000,900);
+						opt.setVisible(false);
+						main.setVisible(true);
+						main.setLocation(700, 500);
+					}
 					
+				});
+				
+				 numObj.addItemListener(new ItemListener()
+				{
+					public void itemStateChanged(ItemEvent e)
+					{
+						int numRounds = numObj.getSelectedIndex();
+						
+					}
+					
+				});
+				
+				
+				
+				//***************  Game *********************************
+				
+				quit.addActionListener(new ActionListener()
+				{
+					public void  actionPerformed (ActionEvent e)
+					{
+						
+						setSize(400,900);
+						main.setVisible(false);
+						opt.setVisible(true);
+					}
+				});
+				
+				
 			   
 		}// end of GUI's 	
 			
