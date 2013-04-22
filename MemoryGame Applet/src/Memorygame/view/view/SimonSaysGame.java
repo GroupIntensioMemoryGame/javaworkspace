@@ -47,16 +47,20 @@ public class SimonSaysGame extends JApplet
 			private  JButton quit;
 			
 // Class Variables
-			private  int numberOfObjects = 0;
+			private  int numberOfObjects = 4;
 			private String NUsr;
 			private  String Usr;
 			/* holds array of shapes and colors selected by user to search 
 			 * to filter size, shape, and colors to load to the object list. 
 			*/
-			private String [] Shape;
-			private int shElements = 0;
-			private String [] Clr;
-			private int strElements = 0;
+			private String [] Shape = new String[3];
+			private String [] Clr = new String[6];
+			//counters to enable play button 
+			private int count1 = 0;
+			private int count2 = 0;
+			
+			private String Sz;
+			private String layOuts;
 				
 			
 			public void init()
@@ -147,7 +151,7 @@ public class SimonSaysGame extends JApplet
 			   opt.add(play = new JButton("Play! "));
 			   play.setBackground(Color.orange);
 			   // disable play button until critera is met
-			   play.setEnabled(true);
+			   play.setEnabled(false);
 			   opt.add(gOptions);
 			   // panel 2
 			   opt.add(NObjects = new JLabel("Number of Objects: "));
@@ -179,6 +183,10 @@ public class SimonSaysGame extends JApplet
 			   opt.add(layout = new JLabel("Layout"));
 			   lay.add(grid = new JRadioButton("Grid"));
 			   lay.add(diamond = new JRadioButton("Diamond"));
+			   grid.setSelected(true);
+			   ButtonGroup group = new ButtonGroup();
+			   group.add(grid);
+			   group.add(diamond);
 			   //add to panel
 			   opt.add(lay);
 			   
@@ -189,12 +197,13 @@ public class SimonSaysGame extends JApplet
 			 
 			   
 			   opt.setBackground(Color.lightGray);
+	
 			   
 			   //*********************Game GUI******************************************
 			   final JPanel main = new JPanel(new BorderLayout());
 			   JPanel gamePane = new JPanel();
-	           ImageIcon img = new ImageIcon("resources/Cir_Blue_Lg.png");
-	           gamePane.add(new JLabel(img),BorderLayout.CENTER);
+	           //ImageIcon img = new ImageIcon("resources/Cir_Blue_Lg.png");
+	           //gamePane.add(new JLabel(img),BorderLayout.CENTER);
 			   main.add(quit = new JButton("quit"),BorderLayout.PAGE_START);
 			   main.add(gamePane,BorderLayout.CENTER);		
 			   		
@@ -273,17 +282,229 @@ public class SimonSaysGame extends JApplet
 					
 				});
 				
+				//Number of Objects ComboBox Listener
 				 numObj.addItemListener(new ItemListener()
 				{
 					public void itemStateChanged(ItemEvent e)
 					{
 						int numRounds = numObj.getSelectedIndex();
 						
+						
 					}
 					
 				});
+				 
+				 // Shapes Listener
+				 Sqr.addActionListener(new ActionListener()
+				 {
+					public void actionPerformed(ActionEvent e)
+					{
+						   if(Sqr.isSelected() == false)
+						   {  
+							 Shape[0] = "";
+						   	 count1--;
+						   }
+						   else
+						   {	   
+							Shape[0] = "Sq";
+						    count1++;
+						   }
+						   enablePlay();
+					
+					}
+					 
+				 });
+				 Tri.addActionListener(new ActionListener()
+				 {
+					public void actionPerformed(ActionEvent e)
+					{
+						if(Tri.isSelected() == false)
+						{
+						   Shape[1] = "";
+						   count1 --;
+						}
+						else	
+						{
+						   Shape[1] = "Tri";
+						   count1++;
+						}
+						
+						enablePlay();
+					
+						
+					}
+				 });
+				 
+				 Cir.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						
+						 if(Cir.isSelected() == false)
+						 {
+							   Shape[2] = "";
+							   count1 --;
+						 }
+							else	
+							{
+							   Shape[2] = "Cir";
+							   count1++;
+							}
+						 enablePlay();
+						 
+					 }
+					 
+				 });
+				// Colors Check Box Listeners
+				 Red.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+
+						 if(Red.isSelected() == false)
+						 {
+							   Clr[0] = "";
+							   count2 --;
+						 }
+							else	
+							{
+							   Clr[0] = "Red";
+							   count2++;
+							}
+						 enablePlay();
+						 
+					 }
+				 });
 				
+				 Blue.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						
+						 if(Blue.isSelected() == false)
+						 {
+							   Clr[1] = "";
+							   count2--;
+						 }
+							else	
+							{
+							   Clr[1] = "Blue";
+							   count2++;
+							}
+						 enablePlay();
+						 
+					 }
+				 });
+				 
+				 Green.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						 
+						 if(Green.isSelected() == false)
+						 {
+							   Clr[2] = "";
+							   count2--;
+						 }
+							else	
+							{
+							   Clr[2] = "Green";
+							   count2++;
+							}
+						enablePlay();
+						 
+					 }
+				 });
+				 
+				 Purple.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						 if(Purple.isSelected() == false)
+						 {
+							   Clr[3] = "";
+							   count2--;
+						 }
+							else	
+							{
+							   Clr[3] = "Purple";
+							   count2++;
+							}
+							enablePlay();
+						 
+					 }
+				 });
+				 
+				 Orange.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						 
+						 if(Orange.isSelected() == false)
+						 {
+							   Clr[4] = "";
+							   count2--;
+						 }
+							else	
+							{
+							   Clr[4] = "Orange";	
+							   count2++;
+							}
+						 enablePlay();
+						 
+					 }
+				 });
+				 
+				 Yellow.addActionListener(new ActionListener()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						 
+						 if(Yellow.isSelected() == false)
+						 {
+							   Clr[5] = "";
+							   count2--;
+						 }
+							else	
+							{
+							   Clr[5] = "Yellow";
+							   count2++;
+							}
+						 enablePlay();
+					 }
+				 });
 				
+				//******** Object Size **********************
+				 size.addItemListener(new ItemListener()
+					{
+						public void itemStateChanged(ItemEvent e)
+						{
+						  
+							Sz = size.getSelectedItem().toString();
+						}
+						
+					});
+				 
+				 //********layout******************
+				 
+				 grid.addActionListener(new ActionListener ()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						 layOuts = "grid";
+					 }
+					 
+				 });
+				 
+				 diamond.addActionListener(new ActionListener ()
+				 {
+					 public void actionPerformed(ActionEvent e)
+					 {
+						 layOuts = "diamond";
+					 }
+					 
+				 });
+			
 				
 				//***************  Game *********************************
 				
@@ -297,10 +518,18 @@ public class SimonSaysGame extends JApplet
 						opt.setVisible(true);
 					}
 				});
+				 
 				
 				
 			   
 		}// end of GUI's 	
 			
-	
+			private void enablePlay()
+			{
+				if(count1 != 0 && count2 != 0)
+					play.setEnabled(true);
+				else 
+					play.setEnabled(false);
+				
+			}
 }// end class
